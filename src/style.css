@@ -46,9 +46,37 @@ body{
 .todo-card{
     display:flex;
     align-items:center;
-    border:thin solid black;
     padding-top: .5rem;
     padding-bottom: .5rem;
+    background: lightgray;
+    margin-bottom: .5rem;
+    border-radius: 4px;
+}
+
+.todo-card.completed {
+    text-decoration: line-through;
+    color: rgba(0,0,0,.5);
+    border-left: 4px solid green;
+  }
+
+.priority-one{
+    border-left: 4px solid red;
+    border-radius: 4px;
+}
+
+.priority-two{
+    border-left: 4px solid orange;
+    border-radius: 4px;
+}
+
+.priority-three{
+    border-left: 4px solid yellow;
+    border-radius: 4px;
+}
+
+.priority-four{
+    border-left: 4px solid lightblue;
+    border-radius: 4px;
 }
 
 .todo-title{
@@ -67,4 +95,35 @@ body{
     background-color: #2e2e2e;
     border-top: 2px solid rgba(0, 0, 0, 0.5);
     color:white;
+}
+
+#new-todo-button{
+    background-color: #E98074; 
+    border: thin solid black;
+    border-radius: 6px;
+    margin-right: 1rem;
+}
+
+#new-todo-button:hover{
+    background-color: #f75442;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.new-todo-form{
+    padding-left: .5rem;
+}
+
+#new-todo-title{
+    width: 15rem;
+    margin-right: 2rem;
+}
+
+#new-todo-date{
+    width: 10ch;
+    margin-right: 2rem;
+}
+
+#new-todo-priority{
+    width: 2.25rem;
+    margin-left: .5rem;
 }

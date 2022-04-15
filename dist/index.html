@@ -16,12 +16,26 @@
             <p>sidebar</p>
         </div>
         <main class="content-container">
-            <h2 id="inbox-header">Inbox</h2>
-            <div class="todo-card">
-                <input type="checkbox" class="todo-checkbox">
-                <h4 class="todo-title">Test Title</h4>
-                <input class="todo-date">
-                <button class="todo-delete">X</button>
+            <div class="todos">
+                <h2 id="inbox-header">Inbox</h2>
+                <div class="todo-card priority-four">
+                    <input type="checkbox" class="todo-checkbox">
+                    <h4 class="todo-title">Test Title</h4>
+                    <input class="todo-date">
+                    <button class="todo-delete">X</button>
+                </div>
+            </div>
+            <div class="new-todo-form todo-card">
+                <button id="new-todo-button">Add Todo</button>
+                <input id="new-todo-title" placeholder="Title">
+                <input id="new-todo-date" placeholder="Date">
+                <label>Priority:</label>
+                <select id="new-todo-priority">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
             </div>
         </main>
         <footer class="footer-container">
