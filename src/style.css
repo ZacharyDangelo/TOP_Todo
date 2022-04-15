@@ -29,12 +29,37 @@ body{
 .sidebar-container{
     grid-area: sidebar;
     background-color: #8E8D8A;
-    border-right: 2px solid rgba(0, 0, 0, 0.5);
+    border-right: 2px solid rgba(0, 0, 0, 0.212);
 }
 
 .content-container{
     grid-area: content;
     background-color: #EAE7DC;
+    padding-left:20%;
+    padding-right: 30%;
+}
+
+#inbox-header{
+    margin-bottom: .75rem;
+}
+
+.todo-card{
+    display:flex;
+    align-items:center;
+    border:thin solid black;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+}
+
+.todo-title{
+    margin:0;
+}
+.todo-date{
+    margin-left:auto;
+    margin-right: .5rem;
+}
+.todo-delete{
+    margin-right: .5rem;
 }
 
 .footer-container{
