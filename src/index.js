@@ -1,5 +1,6 @@
 import Todo from "./todo";
 import Project from "./project";
+import "./style.css";
 
 
 var todo1 = new Todo("Testing123","","",1,"",false);
@@ -9,7 +10,7 @@ var testTodos = [todo1,todo2];
 const displayController = ((document) =>{
     function displayTodos(todos){
         console.log(todos);
-        const todoContainer = document.querySelector(".root");
+        const todoContainer = document.querySelector(".content-container");
         todos.forEach( (todo) => {
             const card = createTodoCard(todo);
             todoContainer.appendChild(card);
