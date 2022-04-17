@@ -83,6 +83,12 @@ body{
 .todo-title{
     margin:0;
 }
+
+.todo-description{
+    margin: 0;
+    color:#2e2e2e;
+}
+
 .todo-date{
     margin-left:auto;
     margin-right: .5rem;
@@ -112,21 +118,34 @@ body{
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
+#edit-todo-button{
+    background-color: #E98074; 
+    border: thin solid black;
+    border-radius: 6px;
+    margin-right: 1rem;
+}
+
+#edit-todo-button:hover{
+    background-color: #f75442;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+
 .new-todo-form{
     padding-left: .5rem;
 }
 
-#new-todo-title{
+.new-todo-title{
     width: 15rem;
     margin-right: 2rem;
 }
 
-#new-todo-date{
-    width: 10ch;
+.new-todo-date{
+    width: 15ch;
     margin-right: 2rem;
 }
 
-#new-todo-priority{
+.new-todo-priority{
     width: 2.25rem;
     margin-left: .5rem;
 }

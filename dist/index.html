@@ -21,16 +21,17 @@
                 <div class="todo-card priority-four">
                     <input type="checkbox" class="todo-checkbox">
                     <h4 class="todo-title">Test Title</h4>
+                    <p class="todo-description">This is a test description</p>
                     <input class="todo-date">
                     <button class="todo-delete">X</button>
                 </div>
             </div>
             <div class="new-todo-form todo-card">
                 <button id="new-todo-button">Add Todo</button>
-                <input id="new-todo-title" placeholder="Title">
-                <input id="new-todo-date" placeholder="Date">
+                <input id="new-todo-title" class="new-todo-title" placeholder="Title">
+                <input id="new-todo-date" class="new-todo-date" type="date" placeholder="Date" min="4-17-2022" max="12/31/2023">
                 <label>Priority:</label>
-                <select id="new-todo-priority">
+                <select id="new-todo-priority" class="new-todo-priority">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>

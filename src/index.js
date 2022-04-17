@@ -3,6 +3,7 @@ import Project from "./project";
 import "./style.css";
 import EditIcon from "./edit.svg";
 import DeleteIcon from "./delete.svg";
+import {format, formatDistance, formatRelative, subDays} from 'date-fns';
 
 
 var todo1 = new Todo("Testing123","","1/2/2022",1,"", false);
@@ -13,6 +14,7 @@ const displayController = ((document) =>{
     function displayTodos(todos){
         console.log(todos);
         const todoContainer = document.querySelector(".todos");
+        
         while(todoContainer.firstChild){
             todoContainer.removeChild(todoContainer.firstChild);
         }
@@ -41,7 +43,7 @@ const displayController = ((document) =>{
 
         const dateText = document.createElement("p");
         dateText.classList.add("todo-date");
-        dateText.textContent = todo.dueDate;
+        dateText.textContent = formatDistance(new Date(), new Date(todo.dueDate), {addSuffix: true});
         card.appendChild(dateText);
 
         const editButton = document.createElement("input");
@@ -80,12 +82,76 @@ const displayController = ((document) =>{
     function displayEditTodo(evt){
         console.log(evt.currentTarget.todo_param);
         console.log(evt.currentTarget.card_param);
+        const card_param = evt.currentTarget.card_param;
+        const todo_param = evt.currentTarget.todo_param;
+
+        while(card_param.firstChild){
+            card_param.removeChild(card_param.firstChild);
+        }
+        card_param.classList.remove("completed");
+        card_param.classList.add("new-todo-form");
+        
+        
+        const saveTodoButton = document.createElement("button");
+        card_param.appendChild(saveTodoButton);
+
+
+        saveTodoButton.id = "edit-todo-button";
+        saveTodoButton.textContent = "Save Todo";
+
+
+        const titleInput = document.createElement("input");
+        titleInput.classList.add("new-todo-title");
+        titleInput.value = todo_param.title;
+        card_param.appendChild(titleInput);
+
+        const dateInput = document.createElement("input");
+        dateInput.type = "date";
+        dateInput.classList.add("new-todo-date");
+        dateInput.placeholder = todo_param.dueDate;
+        card_param.appendChild(dateInput);
+
+        const priorityLabel = document.createElement("label");
+        priorityLabel.textContent = "priority";
+        card_param.appendChild(priorityLabel);
+        const priorityInput = document.createElement("select");
+        priorityInput.classList.add("new-todo-priority");
+        for(var i = 1; i<=4; i++){
+            const opt = document.createElement("option");
+            opt.value = i;
+            opt.textContent = i;
+            priorityInput.appendChild(opt);
+        }
+        card_param.appendChild(priorityInput);
+
+        
+        saveTodoButton.addEventListener("click", saveTodoEdit);
+        saveTodoButton.card_param = card_param;
+        saveTodoButton.todo_param = todo_param;
+
     }
 
     function deleteTodo(evt){
         console.log(evt.currentTarget.todo_param);
         console.log(evt.currentTarget.card_param);
     }
+
+    function saveTodoEdit(evt){
+        const card_param = evt.currentTarget.card_param;
+        const todo_param = evt.currentTarget.todo_param;
+        
+        const titleInput = card_param.querySelector(".new-todo-title").value || todo_param.title;
+        const dateInput = card_param.querySelector(".new-todo-date").value || todo_param.dueDate;
+        const priorityInput = card_param.querySelector(".new-todo-priority") || todo_param.priority;
+
+        todo_param.title = titleInput;
+        todo_param.dueDate = dateInput;
+        todo_param.priority = priorityInput;
+
+        displayController.displayTodos(testTodos);
+    }
+
+    
 
     return {displayTodos};
 })(document);
