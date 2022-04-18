@@ -9,7 +9,7 @@ export default class Project{
     }
 
     removeTodo(todo){
-        this.todos.remove(todo);
+        this.todos = this.todos.filter((item) => item != todo);
     }
 
     

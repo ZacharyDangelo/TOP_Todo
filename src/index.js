@@ -141,8 +141,8 @@ const displayController = ((document) =>{
     }
 
     function deleteTodo(evt){
-        console.log(evt.currentTarget.todo_param);
-        console.log(evt.currentTarget.card_param);
+        currentProject.removeTodo(evt.currentTarget.todo_param);
+        displayTodos();
     }
 
     function saveTodoEdit(evt){
@@ -157,7 +157,7 @@ const displayController = ((document) =>{
         todo_param.dueDate = dateInput;
         todo_param.priority = priorityInput;
 
-        displayController.displayTodos(testTodos);
+        displayController.displayTodos();
     }
 
     function setCurrentProject(project){
