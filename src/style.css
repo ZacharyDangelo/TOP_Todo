@@ -194,3 +194,71 @@ body{
     background-color: #f75442;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
+
+
+.todo-info-window{
+    position:absolute;
+    left: 50%;
+    bottom: 11%;
+    transform: translate(-50%, 0);
+    width: 50%;
+    height: 75%;
+    background: #8E8D8A;
+    border-radius:16px;
+}
+
+.todo-info-window>.row{
+    display:flex;
+    padding-left: 2rem;
+    padding-top: 1rem;
+    align-items:center;
+    gap: 1.25rem;
+}
+
+#close-info-window-icon{
+    margin-left:auto;
+    margin-right: 2rem;
+    height:48px;
+    width:48px;
+}
+
+.todo-info-window>.row img{
+    height: 48px;
+    width: 48px;
+}
+
+#todo-description{
+    width:60%;
+    height: 12rem;
+    border-radius: 12px;
+    resize:none;
+    padding: 19px 24px;
+    font-size: 16px;
+}
+
+.todo-info-window>.row button{
+    width: 128px;
+    height: 48px;
+    font-size: 24px;
+    color:white;
+}
+
+#save-todo-info-button{
+    background-color:rgb(26, 185, 26);
+    border:none;
+}
+
+#save-todo-info-button:hover{
+    background-color:rgb(6, 243, 6);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+#cancel-todo-info-button{
+    background-color:rgb(201, 5, 5);
+    border:none;
+}
+
+#cancel-todo-info-button:hover{
+    background-color:rgb(255, 0, 0);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}

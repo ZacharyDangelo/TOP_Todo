@@ -3,6 +3,7 @@ import Project from "./project";
 import "./style.css";
 import EditIcon from "./edit.svg";
 import DeleteIcon from "./delete.svg";
+import InfoIcon from "./info.svg";
 import {format, formatDistance, formatRelative, subDays} from 'date-fns';
 
 
@@ -59,6 +60,15 @@ const displayController = ((document) =>{
         dateText.textContent = formatDistance(new Date(), new Date(todo.dueDate), {addSuffix: true});
         card.appendChild(dateText);
 
+        const infoButton = document.createElement("input");
+        infoButton.type = "image";
+        infoButton.src = InfoIcon;
+        infoButton.classList.add("todo-info");
+        infoButton.addEventListener("click", displayTodoInfo);
+        infoButton.todo_param = todo;
+        infoButton.card_param = card;
+        card.appendChild(infoButton);
+
         const editButton = document.createElement("input");
         editButton.type = "image";
         editButton.src = EditIcon;
@@ -78,6 +88,10 @@ const displayController = ((document) =>{
 
         card.appendChild(deleteButton);
         return card;
+    }
+
+    function displayTodoInfo(){
+        
     }
 
     function getTodoPriorityClass(todo){
