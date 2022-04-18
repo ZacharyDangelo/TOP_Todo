@@ -21,6 +21,7 @@ var projects = [project, project2, project3, project4];
 const displayController = ((document) =>{
     var isEditing = false;
     var currentProject = projects[0];
+    var expandedTodo = null;
 
     function displayTodos(){
         var todos = currentProject.todos;
@@ -57,7 +58,7 @@ const displayController = ((document) =>{
 
         const dateText = document.createElement("p");
         dateText.classList.add("todo-date");
-        dateText.textContent = formatDistance(new Date(), new Date(todo.dueDate), {addSuffix: true});
+        dateText.textContent = formatDistance(new Date(todo.dueDate), new Date(), {addSuffix: true});
         card.appendChild(dateText);
 
         const infoButton = document.createElement("input");
@@ -90,9 +91,7 @@ const displayController = ((document) =>{
         return card;
     }
 
-    function displayTodoInfo(){
-        
-    }
+
 
     function getTodoPriorityClass(todo){
         if(todo.priority == 1) return "priority-one";
@@ -198,6 +197,54 @@ const displayController = ((document) =>{
     function getCurrentProject(){
         return currentProject;
     }
+
+
+    function displayTodoInfo(evt){
+        const infoWindow = document.querySelector(".todo-info-window");
+        infoWindow.classList.remove("invisible");
+        var todo = evt.currentTarget.todo_param;
+        expandedTodo = todo;
+        infoWindow.querySelector("#info-window-todo-title").textContent = todo.title;
+        infoWindow.querySelector("#todo-description").value = todo.description;
+        infoWindow.querySelector("#todo-info-date").valueAsDate = new Date(todo.dueDate);
+        infoWindow.querySelector("#todo-info-priority").value = todo.priority;
+    }
+
+    function saveTodoInfo(){
+        const infoWindow = document.querySelector(".todo-info-window");
+        if(expandedTodo == null){
+            console.log("ERROR SAVING TODO INFO: NO TODO EXPANDED");
+            return;
+        }
+        const descriptionInput = infoWindow.querySelector("#todo-description");
+        const dueDateInput = infoWindow.querySelector("#todo-info-date");
+        const priorityInput = infoWindow.querySelector("#todo-info-priority");
+        var todo = expandedTodo;
+
+        todo.description = descriptionInput.value;
+        todo.dueDate = dueDateInput.value;
+        todo.priority = priorityInput.value;
+        infoWindow.classList.add("invisible");
+        expandedTodo = null;
+        displayTodos();        
+
+    }
+
+    (function registerClickEvents(){
+        const infoCloseButton = document.querySelector("#close-info-window-icon");
+        infoCloseButton.addEventListener("click", () => {
+            document.querySelector(".todo-info-window").classList.add("invisible");
+        })
+
+        const saveInfoButton = document.querySelector("#save-todo-info-button");
+        saveInfoButton.addEventListener("click", saveTodoInfo);
+
+        const cancelInfoButton = document.querySelector("#cancel-todo-info-button");
+        cancelInfoButton.addEventListener("click", () => {
+            document.querySelector(".todo-info-window").classList.add("invisible");
+        })
+
+    })();
 
     return {displayTodos, displaySidebar, setCurrentProject, getCurrentProject};
 })(document);

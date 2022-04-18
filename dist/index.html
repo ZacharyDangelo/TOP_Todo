@@ -47,10 +47,10 @@
                     <option value="4" selected>4</option>
                 </select>
             </div>
-            <div class="todo-info-window">
+            <div class="todo-info-window invisible">
                 <div class="row">
                     <img src="../src/toc.svg">
-                    <h2 class="info-window-title">Title</h2>
+                    <h2 id="info-window-todo-title" class="info-window-title">Title</h2>
                     <input type="image" src="../src/close.svg" id="close-info-window-icon">
                 </div>
                 <div class="row">
@@ -64,7 +64,7 @@
                 <div class="row">
                     <img src="../src/calendar.svg">
                     <h2>Due Date</h2>
-                    <input id="todo-info-date" class="new-todo-date" type="date" placeholder="Date" min="4-17-2022" max="12/31/2023">
+                    <input id="todo-info-date" class="new-todo-date" type="date" placeholder="Date">
                 </div>
                 <div class="row">
                     <img src="../src/priority.svg">
