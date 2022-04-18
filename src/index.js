@@ -181,8 +181,11 @@ const displayController = ((document) =>{
         });
     }
 
+    function getCurrentProject(){
+        return currentProject;
+    }
 
-    return {displayTodos, displaySidebar, setCurrentProject};
+    return {displayTodos, displaySidebar, setCurrentProject, getCurrentProject};
 })(document);
 
 
@@ -201,7 +204,7 @@ function addTodo(evt){
     }
     
     var newTodo = new Todo(titleInput.value, "description", dateInput.value, priorityInput.value, "notes", false);
-    testTodos.push(newTodo);
+    displayController.getCurrentProject().addTodo(newTodo);
     displayController.displayTodos(testTodos);
 
 
@@ -211,7 +214,7 @@ function addTodo(evt){
 }
 
 function addProject(evt){
-    const nameInput = None;
+    const nameInput = document.querySelector("#new-project-name");
     if(!nameInput.value){
         alert("Name cannot be blank!");
         return;
@@ -224,6 +227,8 @@ function addProject(evt){
 
 const addTodoButton = document.querySelector("#new-todo-button");
 addTodoButton.addEventListener("click", addTodo);
+const addProjectButton = document.querySelector("#new-project-button");
+addProjectButton.addEventListener("click", addProject);
 displayController.setCurrentProject(projects[0]);
 displayController.displaySidebar();
 displayController.displayTodos();

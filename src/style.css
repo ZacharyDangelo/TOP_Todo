@@ -178,3 +178,19 @@ body{
     background-color:rgba(0, 0, 0, 0.192);
     border-radius: 8px;
 }
+
+.new-project-form{
+    margin-left: 2rem;
+}
+
+#new-project-button{
+    background-color: #E98074; 
+    border: thin solid black;
+    border-radius: 6px;
+    margin-right: .25rem;
+}
+
+#new-project-button:hover{
+    background-color: #f75442;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
