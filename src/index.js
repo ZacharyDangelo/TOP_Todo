@@ -10,9 +10,22 @@ var todo1 = new Todo("Testing123","","1/2/2022",1,"", false);
 var todo2 = new Todo("Testing456","","3/16/1996",2,"", true);
 var testTodos = [todo1,todo2];
 
+var project = new Project("Main", testTodos);
+var project2 = new Project("Guitar", []);
+var project3 = new Project("Game Development", [new Todo("Finish State Machine", "", "4/21/2022",2,"", false)]);
+var project4 = new Project("Web Dev", [todo2]);
+
+var projects = [project, project2, project3, project4];
+
 const displayController = ((document) =>{
-    function displayTodos(todos){
-        console.log(todos);
+    var isEditing = false;
+    var currentProject = projects[0];
+
+    function displayTodos(){
+        var todos = currentProject.todos;
+        const inboxHeader = document.querySelector("#inbox-header");
+        inboxHeader.textContent = `${currentProject.name} Inbox`;
+
         const todoContainer = document.querySelector(".todos");
         
         while(todoContainer.firstChild){
@@ -55,8 +68,6 @@ const displayController = ((document) =>{
         editButton.card_param = card;
         card.appendChild(editButton);
 
-
-
         const deleteButton = document.createElement("input");
         deleteButton.type = "image";
         deleteButton.src = DeleteIcon;
@@ -66,8 +77,6 @@ const displayController = ((document) =>{
         deleteButton.card_param = card;
 
         card.appendChild(deleteButton);
-        
-
         return card;
     }
 
@@ -151,14 +160,30 @@ const displayController = ((document) =>{
         displayController.displayTodos(testTodos);
     }
 
-    
+    function setCurrentProject(project){
+        currentProject = project;
+        displayTodos();
+    }
 
-    return {displayTodos};
+    function displaySidebar(){
+        const container = document.querySelector(".projects-container");
+        while(container.firstChild){
+            container.removeChild(container.firstChild);
+        }
+        projects.forEach( (proj) =>{
+            const elem = document.createElement("button");
+            elem.classList.add("sidebar-project");
+            elem.textContent = proj.name;
+            if(proj.name == currentProject.name) elem.classList.add("current-project");
+            elem.addEventListener("click", () => setCurrentProject(proj));
+            elem.proj_param = proj;
+            container.appendChild(elem);
+        });
+    }
+
+
+    return {displayTodos, displaySidebar, setCurrentProject};
 })(document);
-
-displayController.displayTodos(testTodos);
-const addTodoButton = document.querySelector("#new-todo-button");
-addTodoButton.addEventListener("click", addTodo);
 
 
 function addTodo(evt){
@@ -184,3 +209,21 @@ function addTodo(evt){
     dateInput.value = "";
     priorityInput.value = 4;
 }
+
+function addProject(evt){
+    const nameInput = None;
+    if(!nameInput.value){
+        alert("Name cannot be blank!");
+        return;
+    }
+    var newProject = new Project(nameInput.value, []);
+    projects.push(newProject);
+    nameInput.value = "";
+    displayController.displaySidebar();
+}
+
+const addTodoButton = document.querySelector("#new-todo-button");
+addTodoButton.addEventListener("click", addTodo);
+displayController.setCurrentProject(projects[0]);
+displayController.displaySidebar();
+displayController.displayTodos();

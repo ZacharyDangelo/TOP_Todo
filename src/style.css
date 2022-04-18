@@ -95,6 +95,11 @@ body{
     margin-top: 0;
     margin-bottom: 0;
 }
+
+.todo-date::before{
+    content: "Due:"
+}
+
 .todo-delete{
     margin-right: .5rem;
 }
@@ -148,4 +153,28 @@ body{
 .new-todo-priority{
     width: 2.25rem;
     margin-left: .5rem;
+}
+
+
+.sidebar-header{
+    margin-left: 2rem;
+}
+
+.projects-container{
+    gap: 1rem;
+    margin-left: 2rem;
+}
+
+.sidebar-project{
+    display:flex;
+    background:none;
+    border:none;
+    width:90%;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.sidebar-project:hover{
+    background-color:rgba(0, 0, 0, 0.192);
+    border-radius: 8px;
 }

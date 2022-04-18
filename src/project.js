@@ -7,4 +7,10 @@ export default class Project{
     addTodo(todo){
         this.todos.push(todo);
     }
+
+    removeTodo(todo){
+        this.todos.remove(todo);
+    }
+
+    
 }
