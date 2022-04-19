@@ -11,12 +11,9 @@ var todo1 = new Todo("Testing123","","1/2/2022",1,"", false);
 var todo2 = new Todo("Testing456","","3/16/1996",2,"", true);
 var testTodos = [todo1,todo2];
 
-var project = new Project("Main", testTodos);
-var project2 = new Project("Guitar", []);
-var project3 = new Project("Game Development", [new Todo("Finish State Machine", "", "4/21/2022",2,"", false)]);
-var project4 = new Project("Web Dev", [todo2]);
+var mainProject = new Project("Main", testTodos);
 
-var projects = [project, project2, project3, project4];
+var projects = [mainProject];
 
 const displayController = ((document) =>{
     var isEditing = false;
@@ -24,6 +21,14 @@ const displayController = ((document) =>{
     var expandedTodo = null;
 
     function displayTodos(){
+        const newTodoForm = document.querySelector(".new-todo-form");
+        if(currentProject.name == "High Priority" || currentProject.name == "Upcoming" || currentProject.name == "Overdue"){
+            newTodoForm.classList.add("invisible");
+        }
+        else{
+            newTodoForm.classList.remove("invisible");
+        }
+
         var todos = currentProject.todos;
         const inboxHeader = document.querySelector("#inbox-header");
         inboxHeader.textContent = `${currentProject.name} Inbox`;
@@ -43,12 +48,16 @@ const displayController = ((document) =>{
     function createTodoCard(todo){
         const card = document.createElement("div");
         card.classList.add("todo-card");
-        card.classList.add(getTodoPriorityClass(todo));
+        card.classList.add(todo.getPriorityClass());
         if(todo.isComplete) card.classList.add("completed");
 
         const checkBox = document.createElement("input");
         checkBox.type = "checkbox";
         checkBox.classList.add("todo-checkbox");
+        if(todo.isComplete) checkBox.checked = true;
+        checkBox.addEventListener("change", () => {
+            card.classList.toggle("completed");
+        })
         card.appendChild(checkBox);
 
         const title = document.createElement("h4");
@@ -91,19 +100,7 @@ const displayController = ((document) =>{
         return card;
     }
 
-
-
-    function getTodoPriorityClass(todo){
-        if(todo.priority == 1) return "priority-one";
-        if(todo.priority == 2) return "priority-two";
-        if(todo.priority == 3) return "priority-three";
-        if(todo.priority == 4) return "priority-four";
-    }
-
-
     function displayEditTodo(evt){
-        console.log(evt.currentTarget.todo_param);
-        console.log(evt.currentTarget.card_param);
         const card_param = evt.currentTarget.card_param;
         const todo_param = evt.currentTarget.todo_param;
 
@@ -175,10 +172,24 @@ const displayController = ((document) =>{
 
     function setCurrentProject(project){
         currentProject = project;
+        displaySidebar();
         displayTodos();
     }
 
     function displaySidebar(){
+        displayInboxes();
+        displayProjects();
+    }
+
+    function displayInboxes(){
+        const container = document.querySelector(".inboxes-container");
+        container.querySelectorAll(".sidebar-project").forEach((node)=>{
+            if(node.textContent == currentProject.name) node.classList.add("current-project");
+            else node.classList.remove("current-project");
+        });
+    }
+
+    function displayProjects(){
         const container = document.querySelector(".projects-container");
         while(container.firstChild){
             container.removeChild(container.firstChild);
@@ -188,6 +199,7 @@ const displayController = ((document) =>{
             elem.classList.add("sidebar-project");
             elem.textContent = proj.name;
             if(proj.name == currentProject.name) elem.classList.add("current-project");
+            if(proj.name != currentProject.name) elem.classList.remove("current-project");
             elem.addEventListener("click", () => setCurrentProject(proj));
             elem.proj_param = proj;
             container.appendChild(elem);
@@ -230,6 +242,33 @@ const displayController = ((document) =>{
 
     }
 
+
+    function createHighPriorityInbox(){
+        var highPriorityProject = new Project("High Priority",[]);
+        highPriorityProject.createHighPriorityList(projects);
+        console.log(highPriorityProject);
+        currentProject = highPriorityProject;
+        displayTodos();
+        displaySidebar();
+    }
+    function createUpcomingInbox(){
+        var upcomingProject = new Project("Upcoming",[]);
+        upcomingProject.createUpcomingList(projects);
+        console.log(upcomingProject);
+        currentProject = upcomingProject;
+        displayTodos();
+        displaySidebar();
+    }
+    function createOverdueInbox(){
+        var overdueProject = new Project("Overdue",[]);
+        overdueProject.createOverdueList(projects);
+        console.log(overdueProject);
+        currentProject = overdueProject;
+        displayTodos();
+        displaySidebar();
+    }
+
+
     (function registerClickEvents(){
         const infoCloseButton = document.querySelector("#close-info-window-icon");
         infoCloseButton.addEventListener("click", () => {
@@ -244,7 +283,18 @@ const displayController = ((document) =>{
             document.querySelector(".todo-info-window").classList.add("invisible");
         })
 
+        const highPriorityButton = document.querySelector("#high-priority-button");
+        const upcomingButton = document.querySelector("#upcoming-button");
+        const overdueButton = document.querySelector("#overdue-button");
+
+        highPriorityButton.addEventListener("click", createHighPriorityInbox);
+        upcomingButton.addEventListener("click", createUpcomingInbox);
+        overdueButton.addEventListener("click", createOverdueInbox);
+        
+
     })();
+
+
 
     return {displayTodos, displaySidebar, setCurrentProject, getCurrentProject};
 })(document);

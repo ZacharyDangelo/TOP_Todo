@@ -1,3 +1,5 @@
+import {format, formatDistance, formatRelative, subDays, addDays} from 'date-fns';
+
 export default class Project{
     constructor(name, todos){
         this.name = name;
@@ -12,5 +14,35 @@ export default class Project{
         this.todos = this.todos.filter((item) => item != todo);
     }
 
+    createHighPriorityList(projects){
+        projects.forEach( proj =>{
+            proj.todos.forEach( todo =>{
+                if(todo.priority == 1) this.todos.push(todo);
+            });
+        });
+    }
+
+    createOverdueList(projects){
+        console.log(projects);
+        projects.forEach( proj =>{
+            proj.todos.forEach( todo =>{
+                console.log(todo);
+                if(new Date(todo.dueDate) < new Date() && !todo.isComplete){
+                    this.todos.push(todo);
+                }
+            });
+        });
+    }
+
+    createUpcomingList(projects){
+        projects.forEach( proj =>{
+            proj.todos.forEach( todo =>{
+                if(new Date(todo.dueDate) < addDays(new Date(), 7) && !todo.isComplete){
+                    this.todos.push(todo);
+                }
+            });
+        });
+        this.todos.sort( (a,b) => a.dueDate > b.dueDate);
+    }
     
 }

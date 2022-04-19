@@ -166,6 +166,7 @@ body{
 }
 
 .sidebar-project{
+    box-sizing:border-box;
     display:flex;
     background:none;
     border:none;
@@ -174,10 +175,38 @@ body{
     margin-bottom: 1rem;
 }
 
+
 .sidebar-project:hover{
     background-color:rgba(0, 0, 0, 0.192);
     border-radius: 8px;
 }
+
+.inboxes-container{
+    gap: 1rem;
+    margin-left: 2rem;
+}
+
+.sidebar-inbox{
+    display:flex;
+    background:none;
+    border:none;
+    width:90%;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.current-project{
+    border: thin solid black;
+}
+
+.sidebar-inbox:hover{
+    background-color:rgba(0, 0, 0, 0.192);
+    border-radius: 8px;
+}
+
+
+
+
 
 .new-project-form{
     margin-left: 2rem;
