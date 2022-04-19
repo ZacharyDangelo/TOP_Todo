@@ -9,9 +9,7 @@ import {format, formatDistance, formatRelative, subDays} from 'date-fns';
 var projects = [];
 if(localStorage.getItem('projects')){
     var localProjects = localStorage.getItem('projects');
-    console.log(localProjects);
     var decodedProjects = JSON.parse(localProjects);
-    console.log(decodedProjects);
     decodedProjects.forEach((projObj) =>{
         var project = new Project(projObj.name,[]);
         projObj.todos.forEach((todoObj) =>{
@@ -191,6 +189,7 @@ const displayController = ((document) =>{
     }
 
     function setCurrentProject(project){
+        if(!projects.includes(project)) return;
         currentProject = project;
         displaySidebar();
         displayTodos();
@@ -222,9 +221,29 @@ const displayController = ((document) =>{
             if(proj.name != currentProject.name) elem.classList.remove("current-project");
             elem.addEventListener("click", () => setCurrentProject(proj));
             elem.proj_param = proj;
+
+            const deleteButton = document.createElement("input");
+            deleteButton.type = "image";
+            deleteButton.src = DeleteIcon;
+            deleteButton.addEventListener("click", deleteProject);
+            deleteButton.project_param = proj;
+
+            elem.appendChild(deleteButton);
+
             container.appendChild(elem);
         });
     }
+
+    function deleteProject(evt){
+        console.log("deleting project");
+        projects = projects.filter((item) => item != evt.currentTarget.project_param);
+        if(currentProject == evt.currentTarget.project_param){
+            console.log("YES");
+            setCurrentProject(projects[0]);
+        }
+        localStorage.setItem('projects', JSON.stringify(projects));   
+    }
+
 
     function getCurrentProject(){
         return currentProject;

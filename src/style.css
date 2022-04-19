@@ -204,6 +204,11 @@ body{
     margin-bottom: 1rem;
 }
 
+.sidebar-project input{
+    margin-left:auto;
+    z-index: 1;
+}
+
 
 .sidebar-project:hover{
     background-color:rgba(0, 0, 0, 0.192);
