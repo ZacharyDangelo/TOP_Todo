@@ -26,6 +26,26 @@ body{
     color:white;
 }
 
+.header-container p{
+    margin:0;
+    margin-top: -1.5rem;
+    padding-left: 16rem;
+    color:lightgray;
+}
+
+.title{
+    display:flex;
+    align-items:center;
+    padding-left: 4rem;
+}
+.title img{
+    height: 86px;
+    width:86px;
+    max-height:100%;
+    max-width:100%;
+    margin-right: 2rem;
+}
+
 .sidebar-container{
     grid-area: sidebar;
     background-color: #8E8D8A;
@@ -108,6 +128,15 @@ body{
     grid-area: footer;
     background-color: #2e2e2e;
     border-top: 2px solid rgba(0, 0, 0, 0.5);
+    color:white;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    gap: 4rem;
+}
+
+.footer-container a{
+    text-decoration: none;
     color:white;
 }
 
