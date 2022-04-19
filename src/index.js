@@ -6,14 +6,30 @@ import DeleteIcon from "./delete.svg";
 import InfoIcon from "./info.svg";
 import {format, formatDistance, formatRelative, subDays} from 'date-fns';
 
+var projects = [];
+if(localStorage.getItem('projects')){
+    var localProjects = localStorage.getItem('projects');
+    console.log(localProjects);
+    var decodedProjects = JSON.parse(localProjects);
+    console.log(decodedProjects);
+    decodedProjects.forEach((projObj) =>{
+        var project = new Project(projObj.name,[]);
+        projObj.todos.forEach((todoObj) =>{
+            var todo = new Todo(todoObj.title, todoObj.description, todoObj.dueDate, todoObj.priority, todoObj.notes, todoObj.isComplete);
+            project.todos.push(todo);
+        });
+        projects.push(project);
+    });
+}
+else{
+    var todo1 = new Todo("This is an example Todo","This is it's description!","9/30/2022",4,"", false);
+    var todo2 = new Todo("Buy Groceries","","4/16/2022",2,"", true);
+    var testTodos = [todo1,todo2];
+    var mainProject = new Project("Main", testTodos);
+    projects.push(mainProject);
+}
 
-var todo1 = new Todo("Testing123","","1/2/2022",1,"", false);
-var todo2 = new Todo("Testing456","","3/16/1996",2,"", true);
-var testTodos = [todo1,todo2];
 
-var mainProject = new Project("Main", testTodos);
-
-var projects = [mainProject];
 
 const displayController = ((document) =>{
     var isEditing = false;
@@ -238,7 +254,8 @@ const displayController = ((document) =>{
         todo.priority = priorityInput.value;
         infoWindow.classList.add("invisible");
         expandedTodo = null;
-        displayTodos();        
+        displayTodos();     
+        localStorage.setItem('projects', JSON.stringify(projects));   
 
     }
 
@@ -322,6 +339,7 @@ function addTodo(evt){
     titleInput.value = "";
     dateInput.value = "";
     priorityInput.value = 4;
+    localStorage.setItem('projects', JSON.stringify(projects));
 }
 
 function addProject(evt){
@@ -330,10 +348,16 @@ function addProject(evt){
         alert("Name cannot be blank!");
         return;
     }
+    if(nameInput.value == "High Priority" || nameInput.value == "Overdue" || nameInput.value == "Upcoming"){
+        alert("Name cannot be the same as the inboxes.");
+        nameInput.value = "";
+        return;
+    }
     var newProject = new Project(nameInput.value, []);
     projects.push(newProject);
     nameInput.value = "";
     displayController.displaySidebar();
+    localStorage.setItem('projects', JSON.stringify(projects));
 }
 
 const addTodoButton = document.querySelector("#new-todo-button");
@@ -343,3 +367,5 @@ addProjectButton.addEventListener("click", addProject);
 displayController.setCurrentProject(projects[0]);
 displayController.displaySidebar();
 displayController.displayTodos();
+
+localStorage.setItem('projects', JSON.stringify(projects));
