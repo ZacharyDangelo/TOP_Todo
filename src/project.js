@@ -1,4 +1,4 @@
-import {format, formatDistance, formatRelative, subDays, addDays} from 'date-fns';
+import {format, formatDistance, formatRelative, subDays, addDays, differenceInDays} from 'date-fns';
 
 export default class Project{
     constructor(name, todos){
@@ -37,7 +37,8 @@ export default class Project{
     createUpcomingList(projects){
         projects.forEach( proj =>{
             proj.todos.forEach( todo =>{
-                if(new Date(todo.dueDate) < addDays(new Date(), 7) && !todo.isComplete){
+                console.log(`${todo.title} : ${todo.dueDate} : ${differenceInDays(new Date(todo.dueDate), new Date())}`);
+                if(differenceInDays(new Date(todo.dueDate), new Date()) > 0 && differenceInDays(new Date(todo.dueDate), new Date()) <= 7 && !todo.isComplete){
                     this.todos.push(todo);
                 }
             });
@@ -45,8 +46,6 @@ export default class Project{
         this.todos.sort( (a,b) => a.dueDate > b.dueDate);
     }
 
-    convertToLocalStorage(){
-        
-    }
+
     
 }

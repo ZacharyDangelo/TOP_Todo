@@ -15,7 +15,7 @@ if(localStorage.getItem('projects')){
     decodedProjects.forEach((projObj) =>{
         var project = new Project(projObj.name,[]);
         projObj.todos.forEach((todoObj) =>{
-            var todo = new Todo(todoObj.title, todoObj.description, todoObj.dueDate, todoObj.priority, todoObj.notes, todoObj.isComplete);
+            var todo = new Todo(todoObj.title, todoObj.description, todoObj.dueDate, parseInt(todoObj.priority), todoObj.notes, todoObj.isComplete);
             project.todos.push(todo);
         });
         projects.push(project);
@@ -73,6 +73,8 @@ const displayController = ((document) =>{
         if(todo.isComplete) checkBox.checked = true;
         checkBox.addEventListener("change", () => {
             card.classList.toggle("completed");
+            todo.isComplete = !todo.isComplete;
+            localStorage.setItem('projects', JSON.stringify(projects));   
         })
         card.appendChild(checkBox);
 
@@ -168,6 +170,7 @@ const displayController = ((document) =>{
 
     function deleteTodo(evt){
         currentProject.removeTodo(evt.currentTarget.todo_param);
+        localStorage.setItem('projects', JSON.stringify(projects));   
         displayTodos();
     }
 
@@ -183,6 +186,7 @@ const displayController = ((document) =>{
         todo_param.dueDate = dateInput;
         todo_param.priority = priorityInput;
 
+        localStorage.setItem('projects', JSON.stringify(projects));   
         displayController.displayTodos();
     }
 

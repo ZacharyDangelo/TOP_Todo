@@ -5,7 +5,7 @@ export default class Todo{
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
-        this.priority = priority;
+        this.priority = parseInt(priority);
         this.notes = notes;
         this.isComplete = isComplete;
     }
